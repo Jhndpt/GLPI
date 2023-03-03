@@ -1,0 +1,17 @@
+<VirtualHost *:80>
+   ServerName server-IP or FQDN
+   DocumentRoot /var/www/html/glpi
+
+   ErrorLog "/var/log/httpd/glpi_error.log"
+   CustomLog "/var/log/httpd/glpi_access.log" combined
+
+   <Directory> /var/www/html/glpi/config>
+           AllowOverride None
+           Require all denied
+   </Directory>
+
+   <Directory> /var/www/html/glpi/files>
+           AllowOverride None
+           Require all denied
+   </Directory>
+</VirtualHost>
