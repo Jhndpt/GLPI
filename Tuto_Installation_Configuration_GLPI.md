@@ -65,27 +65,27 @@ Lancez la commande suivante :
 
     sudo dnf install httpd mariadb-server -y
 
-![width=50%](Images\1.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/1.png)
 
-![width=50%](Images\2.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/2.png)
 
 Suite à cela, nous allons activer les services.
 
     sudo systemctl enable httpd
     sudo systemctl enable mariadb
 
-![width=50%](Images\3.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/3.png)
 
-![width=50%](Images\4.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/4.png)
 
 Puis nous allons lancer les deux services.
 
     sudo systemctl start httpd
     sudo systemctl start mariadb
 
-![width=50%](Images\5.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/5.png)
 
-![width=50%](Images\6.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/6.png)
 
 ## Installation de PHP
 
@@ -94,13 +94,13 @@ tapez la commande suivante :
 
     sudo dnf install php*
 
-![width=50%](Images\7.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/7.png)
 
 Acceptez les conditions en tapant kbd:\[o\].
 
-![width=50%](Images\8.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/8.png)
 
-![width=50%](Images\9.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/9.png)
 
 ## Création et configuration de la base de donnée
 
@@ -111,13 +111,13 @@ connectez sur SQL, tapez la commande suivante :
 
 MariaDB devrait s’afficher.
 
-![width=50%](Images\10.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/10.png)
 
 ### Création de la base
 
     CREATE DATABASE glpidb;
 
-![width=50%](Images\11.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/11.png)
 
 ### Création de l’utilisateur de la base de donnée
 
@@ -125,7 +125,7 @@ Nous allons créer un compte spécifique à la base de donnée. Pour cela :
 
     GRANT ALL ON  glpidb.* TO 'glpi_user'@'localhost' IDENTIFIED BY 'motdepasse';
 
-![width=50%](Images\12.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/12.png)
 
 ### Droit Utilisateur
 
@@ -133,13 +133,13 @@ Puis nous allons donner des droits.
 
     FLUSH PRIVILEGES;
 
-![width=50%](Images\13.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/13.png)
 
 Quittez en tapant la commande suivante :
 
     EXIT;
 
-![width=50%](Images\14.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/14.png)
 
 # Installation et configuration de GLPI
 
@@ -153,9 +153,9 @@ Décompressez le package :
 
     sudo tar -xvf chemindufichier.tgz /var/www/html/
 
-![width=100%](Images\15.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/15.png)
 
-![width=50%](Images\16.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/16.png)
 
 ## Attribution des droits
 
@@ -163,11 +163,11 @@ Nous allons attribuer un groupe et des droits aux fichiers décompressés.
 
     sudo chown -R apache:apache /var/www/html/glpi
 
-![width=50%](Images\17.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/17.png)
 
     sudo chmod -R 755 /var/www/html/glpi
 
-![width=50%](Images\18.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/18.png)
 
 ## Configuration du serveur web
 
@@ -176,7 +176,7 @@ dirigez-vous à l’endroit suivant :
 
     sudo vim /etc/httpd/conf.d/glpi.conf
 
-![width=50%](Images\19.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/19.png)
 
 Puis renseigner les éléments suivants :
 
@@ -206,15 +206,15 @@ d’accès de RedHat.
     sudo semanage fcontext -a -t httpd_sys_rw_content_t "/var/www/html/glpi(/.*)?"
     sudo restorecon -Rv /var/www/html/glpi
 
-![width=100%](Images\20.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/20.png)
 
-![width=100%](Images\21.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/21.png)
 
 Redémarrez le service Web afin de prendre en compte les modifications.
 
     sudo systemctl restart httpd
 
-![width=50%](Images\22.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/22.png)
 
 ## Régle Pare-feu
 
@@ -222,7 +222,7 @@ Nous allons devoir ouvrir le pare-feu pour autoriser HTTP. Pour cela :
 
     firewall-cmd --zone=public --permanent --add-service=http
 
-![width=100%](Images\23.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/23.png)
 
 # Finalisation GLPI
 
@@ -236,13 +236,13 @@ Vous devriez avoir l’image ci-dessous.
 
 Choisissez btn:\[Français\] puis cliquez sur kbd:\[Ok\].
 
-![width=100%](Images\24.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/24.png)
 
 ## Licence
 
 Acceptez la licence puis cliquez sur kbd:\[Continuer\].
 
-![width=100%](Images\25.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/25.png)
 
 ## Début de la "vrai" installation
 
@@ -250,7 +250,7 @@ Vous allez choisir d’installer ou mettre à jour GLPI.
 
 Cliquez sur kbd:\[Installer\].
 
-![width=100%](Images\26.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/26.png)
 
 ## Liste des prérequis manquants
 
@@ -260,9 +260,9 @@ votre système.
 Vous pouvez voir dans notre cas, que certains pré-requis sont "suggérés"
 mais n’empéchent pas l’installation.
 
-![width=100%](Images\27.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/27.png)
 
-![width=100%](Images\28.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/28.png)
 
 Vous pourrez revenir ultérieurement là dessus.
 
@@ -273,7 +273,7 @@ Cliquez sur kbd:\[Continuer\].
 Nous avons besoin de certaines informations pour connecter la base de
 donnée. renseignez les informations que vous avez utiliser pour MariaDB.
 
-![width=100%](Images\29.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/29.png)
 
 Puis cliquez sur kbd:\[Continuer\].
 
@@ -282,15 +282,15 @@ Puis cliquez sur kbd:\[Continuer\].
 Nous allons tester la connexion de la BDD. Cliquez donc sur
 btn:\[glpidb\] et ensuite sur kbd:\[Continuer\].
 
-![width=100%](Images\30.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/30.png)
 
 ## Initialisation de la BDD
 
 Une initialisation va être effectué. Attendez que ce soit OK.
 
-![width=100%](Images\31.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/31.png)
 
-![width=100%](Images\32.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/32.png)
 
 Puis cliquez sur kbd:\[Continuer\].
 
@@ -298,7 +298,7 @@ Puis cliquez sur kbd:\[Continuer\].
 
 Cochez ou décochez. Faites comme vous voulez.
 
-![width=100%](Images\33.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/33.png)
 
 Cliquez sur kbd:\[Continuer\].
 
@@ -306,7 +306,7 @@ Cliquez sur kbd:\[Continuer\].
 
 GLPI est du OpenSource.
 
-![width=100%](Images\34.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/34.png)
 
 Cliquez sur kbd:\[Continuer\].
 
@@ -316,7 +316,7 @@ L’installation est terminé. Bien joué.
 
 Cliquez sur kbd:\[Utiliser GLPI\].
 
-![width=100%](Images\35.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/35.png)
 
 # Administration de GLPI
 
@@ -325,11 +325,11 @@ Cliquez sur kbd:\[Utiliser GLPI\].
 Vous êtes maintenant sur GLPI. Vous pouvez remarquer qu’il vous informe
 de problèmes de sécurité. Nous allons corriger cela.
 
-![width=100%](Images\36.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/36.png)
 
 Cliquez sur l’utilisateur GLPI et modfifiez le mot de passe.
 
-![width=100%](Images\37.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/37.png)
 
 Pensez à valider la modification du mot de passe en cliquant sur
 kbd:\[Sauvegarder\].
@@ -339,17 +339,17 @@ présents.
 
 Enfin, nous allons supprimer le fichier.
 
-![width=100%](Images\38.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/38.png)
 
 Pour cela, lancez la commande :
 
     sudo rm /var/www/html/glpi/install/install.php
 
-![width=100%](Images\39.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/39.png)
 
 Voilà, vous n’avez plus de messages.
 
-![width=100%](Images\40.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/40.png)
 
 ## Inventaire des postes
 
@@ -360,7 +360,7 @@ ordinateurs.
 Pour cela, btn:\[créez\] un dossier sur un serveur où vous voulez
 partager l’agent. Renseignez les droits suivants.
 
-![width=50%](Images\41.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/41.png)
 
 Créez ensuite une GPO et dirigez-vous à l’endroit ci-dessous :
 
@@ -371,7 +371,7 @@ Ajoutez la ligne :
 
     msiexec.exe
 
-![width=100%](Images\42.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/42.png)
 
 Ajoutez dans Paramètre du script les informations suivantes :
 
@@ -380,12 +380,12 @@ SERVER=”http://mon-serveur-glpi/front/inventory.php”
 
 Comme l’exemple ci-dessous :
 
-![width=100%](Images\44.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/44.png)
 
 Appliquez votre GPO sur les ordinateurs. Vous pourrez voir que cela
 remonte sur votre console GLPI.
 
-![width=100%](Images\43.png)
+![alt text]https://github.com/Jhndpt/GLPI/blob/master/Images/Images/43.png)
 
 # Annexes
 
