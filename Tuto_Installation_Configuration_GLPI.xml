@@ -1,0 +1,642 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<?asciidoc-toc?>
+<?asciidoc-numbered?>
+
+<article lang="en">
+<articleinfo>
+    <title>Installation et Configuration de GLPI</title>
+</articleinfo>
+<simpara><?asciidoc-pagebreak?></simpara>
+<section id="_préambule">
+<title>Préambule</title>
+<simpara>GLPI (sigle de Gestionnaire Libre de Parc Informatique) est un logiciel libre de gestion des services informatiques (ITSM) et de gestion des services d&#8217;assistance (issue tracking system et ServiceDesk). Cette solution libre est éditée en PHP et distribuée sous licence GPL.
+En tant que logiciel de gestion des services informatiques (ITSM), les principaux caractéristiques de GLPI sont les suivantes :</simpara>
+<itemizedlist>
+<listitem>
+<simpara>
+Gestion multi-entité ;
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+Gestion et support multilingue (45 langues disponibles) ;
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+Support multi-utilisateur et système d&#8217;authentification multiple ;
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+Gestion administrative et financière ;
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+Fonctionnalités d&#8217;inventaire ;
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+Gestion d’émission de tickets et des requêtes, fonctionnalités de contrôle (monitoring) ;
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+Gestion des problèmes et des changements ;
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+Gestion des licences (ITIL Compliant) ;
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+Assignation des équipements : lieu, utilisateurs et groupes ;
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+Interface simplifiée permettant aux utilisateurs finaux de soumettre un ticket ;
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+Générateur de rapports d&#8217;actifs et d&#8217;assistance : matériel, réseau ou interventions (support).
+</simpara>
+</listitem>
+</itemizedlist>
+<simpara>(Source Wikipédia)</simpara>
+</section>
+<section id="_prérequis">
+<title>Prérequis</title>
+<itemizedlist>
+<listitem>
+<simpara>
+RHEL 9
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+Package d&#8217;installation GLPI (glpi-10)
+</simpara>
+</listitem>
+</itemizedlist>
+</section>
+<section id="_préparation_du_système">
+<title>Préparation du système</title>
+<section id="_mise_à_jour_du_système">
+<title>Mise à jour du système</title>
+<simpara>De manière à pouvoir installer tous les packages nécessaires, veuillez bien à effectuer la commande suivante :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">sudo dnf update</programlisting>
+<important><simpara>Notez bien que cette méthode fonctionnera seulement si vous avez correctement monté les dépots sur votre système</simpara></important>
+</section>
+<section id="_installation_et_lancement_du_serveur_web_et_de_la_base_de_donnée">
+<title>Installation et lancement du serveur Web et de la base de donnée</title>
+<simpara>Vous allez devoir utiliser un serveur web et une base de données. Pour notre cas, il s&#8217;agira de :</simpara>
+<itemizedlist>
+<listitem>
+<simpara>
+Apache
+</simpara>
+</listitem>
+<listitem>
+<simpara>
+Mariadb
+</simpara>
+</listitem>
+</itemizedlist>
+<simpara>Lancez la commande suivante :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">sudo dnf install httpd mariadb-server -y</programlisting>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\1.png"/>
+  </imageobject>
+  <textobject><phrase>width=50%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\2.png"/>
+  </imageobject>
+  <textobject><phrase>width=50%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<simpara>Suite à cela, nous allons activer les services.</simpara>
+<programlisting language="bash" linenumbering="unnumbered">sudo systemctl enable httpd
+sudo systemctl enable mariadb</programlisting>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\3.png"/>
+  </imageobject>
+  <textobject><phrase>width=50%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\4.png"/>
+  </imageobject>
+  <textobject><phrase>width=50%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<simpara>Puis nous allons lancer les deux services.</simpara>
+<programlisting language="bash" linenumbering="unnumbered">sudo systemctl start httpd
+sudo systemctl start mariadb</programlisting>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\5.png"/>
+  </imageobject>
+  <textobject><phrase>width=50%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\6.png"/>
+  </imageobject>
+  <textobject><phrase>width=50%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+</section>
+<section id="_installation_de_php">
+<title>Installation de PHP</title>
+<simpara>Nous allons installer tous les paquets nécessaires pour PHP. Pour cela, tapez la commande suivante :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">sudo dnf install php*</programlisting>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\7.png"/>
+  </imageobject>
+  <textobject><phrase>width=50%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<simpara>Acceptez les conditions en tapant kbd:[o].</simpara>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\8.png"/>
+  </imageobject>
+  <textobject><phrase>width=50%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\9.png"/>
+  </imageobject>
+  <textobject><phrase>width=50%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+</section>
+<section id="_création_et_configuration_de_la_base_de_donnée">
+<title>Création et configuration de la base de donnée</title>
+<simpara>Nous allons devoir créer une base de donnée. Pour cela, pour vous connectez sur SQL, tapez la commande suivante :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">sudo mysql -u root -p</programlisting>
+<simpara>MariaDB devrait s&#8217;afficher.</simpara>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\10.png"/>
+  </imageobject>
+  <textobject><phrase>width=50%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<section id="_création_de_la_base">
+<title>Création de la base</title>
+<programlisting language="sql" linenumbering="unnumbered">CREATE DATABASE glpidb;</programlisting>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\11.png"/>
+  </imageobject>
+  <textobject><phrase>width=50%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+</section>
+<section id="_création_de_l_8217_utilisateur_de_la_base_de_donnée">
+<title>Création de l&#8217;utilisateur de la base de donnée</title>
+<simpara>Nous allons créer un compte spécifique à la base de donnée. Pour cela :</simpara>
+<programlisting language="sql" linenumbering="unnumbered">GRANT ALL ON  glpidb.* TO 'glpi_user'@'localhost' IDENTIFIED BY 'motdepasse';</programlisting>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\12.png"/>
+  </imageobject>
+  <textobject><phrase>width=50%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+</section>
+<section id="_droit_utilisateur">
+<title>Droit Utilisateur</title>
+<simpara>Puis nous allons donner des droits.</simpara>
+<programlisting language="sql" linenumbering="unnumbered">FLUSH PRIVILEGES;</programlisting>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\13.png"/>
+  </imageobject>
+  <textobject><phrase>width=50%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<simpara>Quittez en tapant la commande suivante :</simpara>
+<programlisting language="sql" linenumbering="unnumbered">EXIT;</programlisting>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\14.png"/>
+  </imageobject>
+  <textobject><phrase>width=50%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+</section>
+</section>
+</section>
+<section id="_installation_et_configuration_de_glpi">
+<title>Installation et configuration de GLPI</title>
+<simpara>Récupérez le package GLPI. Il est disponible à l&#8217;URL suivant :</simpara>
+<simpara><ulink url="https://github.com/glpi-project/glpi/releases/download/10.0.0/glpi-10.0.0.tgz">https://github.com/glpi-project/glpi/releases/download/10.0.0/glpi-10.0.0.tgz</ulink></simpara>
+<section id="_décompression">
+<title>Décompression</title>
+<simpara>Décompressez le package :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">sudo tar -xvf chemindufichier.tgz /var/www/html/</programlisting>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\15.png"/>
+  </imageobject>
+  <textobject><phrase>width=100%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\16.png"/>
+  </imageobject>
+  <textobject><phrase>width=50%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+</section>
+<section id="_attribution_des_droits">
+<title>Attribution des droits</title>
+<simpara>Nous allons attribuer un groupe et des droits aux fichiers décompressés.</simpara>
+<programlisting language="bash" linenumbering="unnumbered">sudo chown -R apache:apache /var/www/html/glpi</programlisting>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\17.png"/>
+  </imageobject>
+  <textobject><phrase>width=50%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<programlisting language="bash" linenumbering="unnumbered">sudo chmod -R 755 /var/www/html/glpi</programlisting>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\18.png"/>
+  </imageobject>
+  <textobject><phrase>width=50%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+</section>
+<section id="_configuration_du_serveur_web">
+<title>Configuration du serveur web</title>
+<simpara>Nous allons configurer le répertoire web de GLPI. Pour cela, dirigez-vous à l&#8217;endroit suivant :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">sudo vim /etc/httpd/conf.d/glpi.conf</programlisting>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\19.png"/>
+  </imageobject>
+  <textobject><phrase>width=50%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<simpara>Puis renseigner les éléments suivants :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">&lt;VirtualHost *:80&gt;
+   ServerName server-IP or FQDN
+   DocumentRoot /var/www/html/glpi
+
+   ErrorLog "/var/log/httpd/glpi_error.log"
+   CustomLog "/var/log/httpd/glpi_access.log" combined
+
+   &lt;Directory&gt; /var/www/html/glpi/config&gt;
+           AllowOverride None
+           Require all denied
+   &lt;/Directory&gt;
+
+   &lt;Directory&gt; /var/www/html/glpi/files&gt;
+           AllowOverride None
+           Require all denied
+   &lt;/Directory&gt;
+&lt;/VirtualHost&gt;</programlisting>
+</section>
+<section id="_stratégies_selinux">
+<title>Stratégies SELinux</title>
+<simpara>Nous allons rajouter des "contextes" dans la politique de contrôle d&#8217;accès de RedHat.</simpara>
+<programlisting language="bash" linenumbering="unnumbered">sudo semanage fcontext -a -t httpd_sys_rw_content_t "/var/www/html/glpi(/.*)?"
+sudo restorecon -Rv /var/www/html/glpi</programlisting>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\20.png"/>
+  </imageobject>
+  <textobject><phrase>width=100%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\21.png"/>
+  </imageobject>
+  <textobject><phrase>width=100%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<simpara>Redémarrez le service Web afin de prendre en compte les modifications.</simpara>
+<programlisting language="bash" linenumbering="unnumbered">sudo systemctl restart httpd</programlisting>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\22.png"/>
+  </imageobject>
+  <textobject><phrase>width=50%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+</section>
+<section id="_régle_pare_feu">
+<title>Régle Pare-feu</title>
+<simpara>Nous allons devoir ouvrir le pare-feu pour autoriser HTTP. Pour cela :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">firewall-cmd --zone=public --permanent --add-service=http</programlisting>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\23.png"/>
+  </imageobject>
+  <textobject><phrase>width=100%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+</section>
+</section>
+<section id="_finalisation_glpi">
+<title>Finalisation GLPI</title>
+<section id="_langage">
+<title>Langage</title>
+<simpara>La configuration initiale de GLPI n&#8217;est pas terminé. Il faut maintenant lancer  un navigateur web (de préférence Firefox) sur votre réseau et taper l&#8217;IP de votre serveur GLPI.</simpara>
+<simpara>Vous devriez avoir l&#8217;image ci-dessous.</simpara>
+<simpara>Choisissez btn:[Français] puis cliquez sur kbd:[Ok].</simpara>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\24.png"/>
+  </imageobject>
+  <textobject><phrase>width=100%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+</section>
+<section id="_licence">
+<title>Licence</title>
+<simpara>Acceptez la licence puis cliquez sur kbd:[Continuer].</simpara>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\25.png"/>
+  </imageobject>
+  <textobject><phrase>width=100%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+</section>
+<section id="_début_de_la_vrai_installation">
+<title>Début de la "vrai" installation</title>
+<simpara>Vous allez choisir d&#8217;installer ou mettre à jour GLPI.</simpara>
+<simpara>Cliquez sur kbd:[Installer].</simpara>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\26.png"/>
+  </imageobject>
+  <textobject><phrase>width=100%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+</section>
+<section id="_liste_des_prérequis_manquants">
+<title>Liste des prérequis manquants</title>
+<simpara>L&#8217;installation va effectuer une vérification des pré-requis présents sur votre système.</simpara>
+<simpara>Vous pouvez voir dans notre cas, que certains pré-requis sont "suggérés" mais n&#8217;empéchent pas l&#8217;installation.</simpara>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\27.png"/>
+  </imageobject>
+  <textobject><phrase>width=100%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\28.png"/>
+  </imageobject>
+  <textobject><phrase>width=100%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<simpara>Vous pourrez revenir ultérieurement là dessus.</simpara>
+<simpara>Cliquez sur kbd:[Continuer].</simpara>
+</section>
+<section id="_configuration_de_la_connexion_à_la_base_de_donnée">
+<title>Configuration de la connexion à la base de donnée</title>
+<simpara>Nous avons besoin de certaines informations pour connecter la base de donnée. renseignez les informations que vous avez utiliser pour MariaDB.</simpara>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\29.png"/>
+  </imageobject>
+  <textobject><phrase>width=100%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<simpara>Puis cliquez sur kbd:[Continuer].</simpara>
+</section>
+<section id="_test_de_connexion_de_la_bdd">
+<title>Test de connexion de la BDD</title>
+<simpara>Nous allons tester la connexion de la BDD. Cliquez donc sur btn:[glpidb] et ensuite sur kbd:[Continuer].</simpara>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\30.png"/>
+  </imageobject>
+  <textobject><phrase>width=100%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+</section>
+<section id="_initialisation_de_la_bdd">
+<title>Initialisation de la BDD</title>
+<simpara>Une initialisation va être effectué. Attendez que ce soit OK.</simpara>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\31.png"/>
+  </imageobject>
+  <textobject><phrase>width=100%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\32.png"/>
+  </imageobject>
+  <textobject><phrase>width=100%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<simpara>Puis cliquez sur kbd:[Continuer].</simpara>
+</section>
+<section id="_statistiques">
+<title>Statistiques</title>
+<simpara>Cochez ou décochez. Faites comme vous voulez.</simpara>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\33.png"/>
+  </imageobject>
+  <textobject><phrase>width=100%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<simpara>Cliquez sur kbd:[Continuer].</simpara>
+</section>
+<section id="_etape_5">
+<title>Etape 5</title>
+<simpara>GLPI est du OpenSource.</simpara>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\34.png"/>
+  </imageobject>
+  <textobject><phrase>width=100%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<simpara>Cliquez sur kbd:[Continuer].</simpara>
+</section>
+<section id="_etape_6">
+<title>Etape 6</title>
+<simpara>L&#8217;installation est terminé. Bien joué.</simpara>
+<simpara>Cliquez sur kbd:[Utiliser GLPI].</simpara>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\35.png"/>
+  </imageobject>
+  <textobject><phrase>width=100%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+</section>
+</section>
+<section id="_administration_de_glpi">
+<title>Administration de GLPI</title>
+<section id="_problèmes_de_sécurité">
+<title>Problèmes de sécurité</title>
+<simpara>Vous êtes maintenant sur GLPI. Vous pouvez remarquer qu&#8217;il vous informe de problèmes de sécurité. Nous allons corriger cela.</simpara>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\36.png"/>
+  </imageobject>
+  <textobject><phrase>width=100%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<simpara>Cliquez sur l&#8217;utilisateur GLPI et modfifiez le mot de passe.</simpara>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\37.png"/>
+  </imageobject>
+  <textobject><phrase>width=100%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<simpara>Pensez à valider la modification du mot de passe en cliquant sur kbd:[Sauvegarder].</simpara>
+<note><simpara>Effectuez cette modification sur l&#8217;ensemble des utilisateurs déja présents.</simpara></note>
+<simpara>Enfin, nous allons supprimer le fichier.</simpara>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\38.png"/>
+  </imageobject>
+  <textobject><phrase>width=100%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<simpara>Pour cela, lancez la commande :</simpara>
+<programlisting language="bash" linenumbering="unnumbered">sudo rm /var/www/html/glpi/install/install.php</programlisting>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\39.png"/>
+  </imageobject>
+  <textobject><phrase>width=100%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<simpara>Voilà, vous n&#8217;avez plus de messages.</simpara>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\40.png"/>
+  </imageobject>
+  <textobject><phrase>width=100%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+</section>
+<section id="_inventaire_des_postes">
+<title>Inventaire des postes</title>
+<simpara>Comme vous avez pu le constater, nous n&#8217;avons aucune remontés d&#8217;informations. Nous allons devoir installer le agent GLPI sur nos ordinateurs.</simpara>
+<simpara>Pour cela, btn:[créez] un dossier sur un serveur où vous voulez partager l&#8217;agent. Renseignez les droits suivants.</simpara>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\41.png"/>
+  </imageobject>
+  <textobject><phrase>width=50%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<simpara>Créez ensuite une GPO et dirigez-vous à l&#8217;endroit ci-dessous :</simpara>
+<simpara>Configuration Ordinateur &gt; Paramètre Windows &gt; Scripts (démarrage/arrêt) &gt; Démarrage</simpara>
+<simpara>Ajoutez la ligne :</simpara>
+<programlisting language="cmd" linenumbering="unnumbered">msiexec.exe</programlisting>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\42.png"/>
+  </imageobject>
+  <textobject><phrase>width=100%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<simpara>Ajoutez dans Paramètre du script les informations suivantes :</simpara>
+<simpara>/quiet /i "\\Le chemin réseau" RUNNOW=1 SERVER=”http://mon-serveur-glpi/front/inventory.php”</simpara>
+<simpara>Comme l&#8217;exemple ci-dessous :</simpara>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\44.png"/>
+  </imageobject>
+  <textobject><phrase>width=100%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+<simpara>Appliquez votre GPO sur les ordinateurs. Vous pourrez voir que cela remonte sur votre console GLPI.</simpara>
+<informalfigure>
+<mediaobject>
+  <imageobject>
+  <imagedata fileref="Images\43.png"/>
+  </imageobject>
+  <textobject><phrase>width=100%</phrase></textobject>
+</mediaobject>
+</informalfigure>
+</section>
+</section>
+<section id="_annexes">
+<title>Annexes</title>
+<simpara>Liens des sites utilisés :</simpara>
+<simpara><ulink url="https://fr.techtribune.net/linux/comment-installer-glpi-it-asset-management-sur-les-systemes-rhel/319955/">https://fr.techtribune.net/linux/comment-installer-glpi-it-asset-management-sur-les-systemes-rhel/319955/</ulink></simpara>
+<simpara><ulink url="https://neptunet.fr/deploy-agents-for-glpi/">https://neptunet.fr/deploy-agents-for-glpi/</ulink></simpara>
+<simpara><ulink url="https://github.com/glpi-project/glpi/releases/">https://github.com/glpi-project/glpi/releases/</ulink></simpara>
+</section>
+</article>
