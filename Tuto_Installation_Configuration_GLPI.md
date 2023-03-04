@@ -7,27 +7,27 @@ solution libre est éditée en PHP et distribuée sous licence GPL. En tant
 que logiciel de gestion des services informatiques (ITSM), les
 principaux caractéristiques de GLPI sont les suivantes :
 
--   Gestion multi-entité ;
+- Gestion multi-entité ;
 
--   Gestion et support multilingue (45 langues disponibles) ;
+- Gestion et support multilingue (45 langues disponibles) ;
 
--   Support multi-utilisateur et système d’authentification multiple ;
+- Support multi-utilisateur et système d’authentification multiple ;
 
--   Gestion administrative et financière ;
+- Gestion administrative et financière ;
 
--   Fonctionnalités d’inventaire ;
+- Fonctionnalités d’inventaire ;
 
--   Gestion d’émission de tickets et des requêtes, fonctionnalités de
-    contrôle (monitoring) ;
+- Gestion d’émission de tickets et des requêtes, fonctionnalités de
+contrôle (monitoring) ;
 
--   Gestion des problèmes et des changements ;
+- Gestion des problèmes et des changements ;
 
--   Gestion des licences (ITIL Compliant) ;
+- Gestion des licences (ITIL Compliant) ;
 
--   Assignation des équipements : lieu, utilisateurs et groupes ;
+- Assignation des équipements : lieu, utilisateurs et groupes ;
 
--   Interface simplifiée permettant aux utilisateurs finaux de soumettre
-    un ticket ;
+- Interface simplifiée permettant aux utilisateurs finaux de soumettre
+un ticket ;
 
 -   Générateur de rapports d’actifs et d’assistance : matériel, réseau
     ou interventions (support).
@@ -65,7 +65,7 @@ Lancez la commande suivante :
 
     sudo dnf install httpd mariadb-server -y
 
-![alt text](https://github.com/Jhndpt/GLPI/blob/master/Images/1.PNG)
+![width=50%](Images\1.png)
 
 ![width=50%](Images\2.png)
 
