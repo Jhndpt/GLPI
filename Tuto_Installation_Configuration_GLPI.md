@@ -65,7 +65,7 @@ Lancez la commande suivante :
 
     sudo dnf install httpd mariadb-server -y
 
-(https://github.com/Jhndpt/GLPI/blob/master/Images/1.PNG)
+![alt text] (https://github.com/Jhndpt/GLPI/blob/master/Images/1.PNG)
 
 ![width=50%](Images\2.png)
 
